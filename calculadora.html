@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007bff">
+    <title>Calculadora de Semen</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f0f0f0; padding: 20px; display: flex; justify-content: center; }
+        .container { background: white; padding: 20px; border-radius: 8px; width: 100%; max-width: 500px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { font-size: 1.3rem; text-align: center; color: #333; }
+        .row { display: grid; grid-template-columns: repeat(12, 1fr); align-items: center; margin-bottom: 12px; gap: 4px; }
+        label { grid-column: span 6; font-weight: bold; font-size: 0.9rem; }
+        input { grid-column: span 4; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        .unit { grid-column: span 1; font-size: 0.8rem; color: #777; margin-left: 4px; }
+        button { width: 100%; padding: 15px; background: #007bff; color: white; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer; }
+        #resultsTable { width: 100%; margin-top: 20px; border-collapse: collapse; display: none; }
+        td { border: 1px solid #ddd; padding: 10px; }
+        .label-cell { font-weight: bold; width: 50%; }
+        .value-cell { font-weight: bold; font-size: 1.2rem; color: #d32f2f; text-align: right; }
+        .small-text { font-size: 0.7rem; color: #666; display: block; font-weight: normal; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Calculo de dosis y taza de dilución de semen</h1>
+    <div class="row"><label>Volumen de Semen:</label><input type="number" id="volSem" value="5"><div class="unit">ml.</div></div>
+    <div class="row"><label>Motilidad:</label><input type="number" id="mot" value="80"><div class="unit">%</div></div>
+    <div class="row"><label>Morfología:</label><input type="number" id="morf" value="80"><div class="unit">%</div></div>
+    <div class="row"><label>Conteo espermático:</label><input type="number" id="contEsp" value="140"></div>
+    <div class="row"><label>Espermatozoides por dosis:</label><input type="number" id="espDosis" value="30"></div>
+    <div class="row"><label>Volumen por Dosis:</label><input type="number" id="volDosis" value="0.25"></div>
+
+    <button onclick="calcular()">CALCULAR</button>
+
+    <table id="resultsTable">
+        <tr><td class="label-cell">Concentración:</td><td class="value-cell" id="resConc"></td></tr>
+        <tr><td class="label-cell">Esp. por Eyaculado:</td><td class="value-cell" id="resEspEyac"></td></tr>
+        <tr><td class="label-cell">Esp. Viables:</td><td class="value-cell" id="resEspVia"></td></tr>
+        <tr><td class="label-cell">Dosis por Eyaculado:</td><td class="value-cell" id="resDosEyac"></td></tr>
+        <tr><td class="label-cell">Taza de Dilución:</td><td class="value-cell" id="resTazDil"></td></tr>
+        <tr><td class="label-cell">Volumen del Diluyente:</td><td class="value-cell" id="resVolDil"></td></tr>
+    </table>
+</div>
+
+<script>
+    function calcular() {
+        const vS = parseFloat(document.getElementById('volSem').value);
+        const mt = parseFloat(document.getElementById('mot').value);
+        const mf = parseFloat(document.getElementById('morf').value);
+        const ce = parseFloat(document.getElementById('contEsp').value);
+        const ed = parseFloat(document.getElementById('espDosis').value);
+        const vd = parseFloat(document.getElementById('volDosis').value);
+
+        const conc = ce * 10000;
+        const espEy = conc * vS;
+        const espVi = (espEy * (mt / 100)) * (mf / 100);
+        const dosEy = espVi / (ed * 1000000);
+        const tazDi = dosEy * vd;
+        const volDi = vS-tazDi ;
+
+        document.getElementById('resultsTable').style.display = 'table';
+        document.getElementById('resConc').innerHTML = conc.toLocaleString() + '<span class="small-text">esp/ml.</span>';
+        document.getElementById('resEspEyac').innerHTML = espEy.toLocaleString();
+        document.getElementById('resEspVia').innerHTML = espVi.toLocaleString();
+        document.getElementById('resDosEyac').innerHTML = dosEy.toFixed(2);
+        document.getElementById('resTazDil').innerHTML = tazDi.toFixed(2) + '<span class="small-text">ml.</span>';
+        document.getElementById('resVolDil').innerHTML = volDi.toFixed(2) + '<span class="small-text">ml.</span>';
+    }
+
+    // REGISTRO DEL SERVICE WORKER PARA MODO OFFLINE
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js');
+      });
+    }
+</script>
+</body>
+</html>
