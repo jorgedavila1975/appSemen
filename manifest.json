@@ -1,7 +1,7 @@
 {
   "name": "Calculadora de Semen",
   "short_name": "SemenCalc",
-  "start_url": "calculadora.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#f0f0f0",
   "theme_color": "#007bff",
@@ -18,4 +18,5 @@
       "type": "image/png"
     }
   ]
+
 }
