@@ -1,7 +1,7 @@
 const CACHE_NAME = 'calculadora-semen-v1';
 const assets = [
   './',
-  './calculadora.html',
+  './index.html',
   './manifest.json'
 ];
 
@@ -21,4 +21,5 @@ self.addEventListener('fetch', e => {
       return res || fetch(e.request);
     })
   );
+
 });
