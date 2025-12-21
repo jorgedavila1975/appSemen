@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#007bff">
     <title>Calculadora de Semen</title>
@@ -46,6 +49,12 @@
 </div>
 
 <script>
+    window.onload = function() {
+        // Forzar la recarga de la página sin caché
+        if (performance.navigation.type == 1) {
+            location.reload(true);
+        }
+    };
     function calcular() {
         const vS = parseFloat(document.getElementById('volSem').value);
         const mt = parseFloat(document.getElementById('mot').value);
@@ -79,5 +88,6 @@
 </script>
 </body>
 </html>
+
 
 
