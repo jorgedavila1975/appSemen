@@ -68,7 +68,7 @@
         const espVi = (espEy * (mt / 100)) * (mf / 100);
         const dosEy = espVi / (ed * 1000000);
         const tazDi = dosEy * vd;
-        const volDi = vS-tazDi ;
+        const volDi = tazDi-vS ;
 
         document.getElementById('resultsTable').style.display = 'table';
         document.getElementById('resConc').innerHTML = conc.toLocaleString() + '<span class="small-text">esp/ml.</span>';
@@ -88,6 +88,7 @@
 </script>
 </body>
 </html>
+
 
 
 
