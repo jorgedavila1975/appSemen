@@ -54,7 +54,7 @@
         const ed = parseFloat(document.getElementById('espDosis').value);
         const vd = parseFloat(document.getElementById('volDosis').value);
 
-        const conc = ce * 10000;
+        const conc = ce * 10000000;
         const espEy = conc * vS;
         const espVi = (espEy * (mt / 100)) * (mf / 100);
         const dosEy = espVi / (ed * 1000000);
@@ -79,4 +79,5 @@
 </script>
 </body>
 </html>
+
 
